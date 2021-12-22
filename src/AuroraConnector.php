@@ -47,6 +47,10 @@ final class AuroraConnector extends MySqlConnector
      */
     protected function configureIsolationLevel($connection, array $config)
     {
+        if (isset($config['isolation_level']) && $config['isolation_level'] === 'off') {
+            return;
+        }
+
         $connection->prepare('SET SESSION aurora_read_replica_read_committed = ON')->execute();
 
         $connection->prepare('SET SESSION TRANSACTION ISOLATION LEVEL read committed')->execute();
