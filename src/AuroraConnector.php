@@ -16,7 +16,7 @@ final class AuroraConnector extends MySqlConnector
         // If the developer explicitly set the `password` attribute on the database
         // configuration, we'll go ahead and establish a regular connection. This
         // is useful for automation tests that bypass the connection process.
-        if (isset($config['password'])) {
+        if (! empty($config['password'])) {
             return parent::createConnection($dsn, $config, $options);
         }
 
