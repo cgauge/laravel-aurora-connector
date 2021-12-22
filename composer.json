@@ -1,0 +1,39 @@
+{
+  "name": "customergauge/aurora",
+  "description": "Aurora Connector for Laravel with READ COMMITTED & AWS Secret Manager",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["aurora", "connector", "laravel", "mysql", "secret", "password", "rotation"],
+  "authors": [
+    {
+      "name": "Abdala Cerqueira",
+      "email": "abdala.cerqueira@customergauge.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "monolog/monolog": "^2.1",
+    "illuminate/support": "^8.12",
+    "illuminate/database": "^8.12",
+    "illuminate/http": "^8.12"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "CustomerGauge\\Aurora\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\CustomerGauge\\Aurora\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CustomerGauge\\Aurora\\AuroraServiceProvider"
+      ]
+    }
+  }
+}
