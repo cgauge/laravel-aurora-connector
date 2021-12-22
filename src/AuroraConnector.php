@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Customergauge\Aurora;
+namespace CustomerGauge\Aurora;
 
 use Exception;
 use Illuminate\Database\Connectors\MySqlConnector;
