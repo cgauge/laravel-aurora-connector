@@ -30,7 +30,8 @@ In the `database.php`, we define a connection using the `aurora` driver
             'aurora' => [
                 'secret' => env('AWS_SECRET_NAME'),
             ],
-        ],```
+        ],
+```
 
 The new 'aurora' key will allow the confiugration for the AWS Secret manager.
 
