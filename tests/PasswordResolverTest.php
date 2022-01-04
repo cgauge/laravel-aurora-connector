@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\CustomerGauge\Aurora;
 
 use Aws\SecretsManager\SecretsManagerClient;
 use CustomerGauge\Aurora\PasswordResolver;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Client\Factory;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class PasswordResolverTest extends TestCase
 {
@@ -15,13 +15,16 @@ class PasswordResolverTest extends TestCase
         $secretName = 'secretName';
         $password = 'password';
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error');
+
         $smClient = $this->createMock(SecretsManagerClient::class);
         $smClient->expects($this->once())
             ->method('__call')
             ->with('getSecretValue', [$secretName])
             ->willReturn(['SecretString' => json_encode(['password' => $password])]);
 
-        $sut = new PasswordResolver(new Factory(), $smClient);
+        $sut = new PasswordResolver(new Factory(), $smClient, $logger);
 
         $result = $sut->resolve($secretName, false);
 

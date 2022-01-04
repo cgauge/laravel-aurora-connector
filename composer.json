@@ -13,11 +13,11 @@
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
-    "monolog/monolog": "^2.1",
     "illuminate/support": "^8.12",
     "illuminate/database": "^8.12",
     "illuminate/http": "^8.12",
-    "aws/aws-sdk-php": "^3.208"
+    "aws/aws-sdk-php": "^3.208",
+    "psr/log": "^2"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
