@@ -13,7 +13,6 @@ final class AwsServiceProvider extends ServiceProvider
             $config = $this->app['config']->get('aws');
 
             return new SecretsManagerClient([
-                'profile' => 'default',
                 'version' => '2017-10-17',
                 'region' => $config['region'],
             ]);
