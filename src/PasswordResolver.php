@@ -24,7 +24,7 @@ final class PasswordResolver
         } catch (Throwable $e) {
             $this->logger->error('Failed to retrieve password from cache server. ' . $e);
 
-            $response = $this->smClient->getSecretValue($secret);
+            $response = $this->smClient->getSecretValue(['SecretId' => $secret]);
             $result = json_decode($response['SecretString'], true);
         }
 
