@@ -35,7 +35,8 @@
   "extra": {
     "laravel": {
       "providers": [
-        "CustomerGauge\\Aurora\\AuroraServiceProvider"
+        "CustomerGauge\\Aurora\\AuroraServiceProvider",
+        "CustomerGauge\\Aurora\\AwsServiceProvider"
       ]
     }
   },
