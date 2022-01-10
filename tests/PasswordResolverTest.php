@@ -21,7 +21,7 @@ class PasswordResolverTest extends TestCase
         $smClient = $this->createMock(SecretsManagerClient::class);
         $smClient->expects($this->once())
             ->method('__call')
-            ->with('getSecretValue', ['SecretId' => $secretName])
+            ->with('getSecretValue', [['SecretId' => $secretName]])
             ->willReturn(['SecretString' => json_encode(['password' => $password])]);
 
         $sut = new PasswordResolver(new Factory(), $smClient, $logger);
