@@ -35,6 +35,20 @@ In the `database.php`, we define a connection using the `aurora` driver
 
 The new 'aurora' key will allow the confiugration for the AWS Secret manager.
 
-### Extension
+### Isolation Levels 
+By default we allow Aurora to use read committed from the read replica to reduce history length maintained by the writer replica.
+If you want to turn it off, go in the `database.php`, inside the connection that you want and add
 
+```php
+        'tenant' => [
+            'driver' => 'aurora',
+            'isolation_level' => 'off'
+            ...
+        ],
+```
+
+Click to know more about [Isolations Levels](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Reference.html#AuroraMySQL.Reference.IsolationLevels)
+
+
+### Extension
 @TODO
