@@ -60,5 +60,6 @@ If you want to turn it off, go in the `database.php`, inside the connection that
 Click to know more about [Isolations Levels](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Reference.html#AuroraMySQL.Reference.IsolationLevels)
 
 
-### Extension
-@TODO
+### AWS Lambda Extension
+
+This library performs better together with a cache server, more info: https://github.com/cgauge/aws-secretsmanager-caching-extension
