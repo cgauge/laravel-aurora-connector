@@ -63,3 +63,12 @@ Click to know more about [Isolations Levels](https://docs.aws.amazon.com/AmazonR
 ### AWS Lambda Extension
 
 This library performs better together with a cache server, more info: https://github.com/cgauge/aws-secretsmanager-caching-extension
+
+## Contributing
+
+Contributions are always welcome, please have a look at our issues to see if there's something you could help with.
+
+## License
+
+Laravel Aurora Connector is licensed under MIT license.
+
