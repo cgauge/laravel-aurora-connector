@@ -15,9 +15,9 @@
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
-    "illuminate/support": "^8.12 || ^9.0",
-    "illuminate/database": "^8.12 || ^9.0",
-    "illuminate/http": "^8.12 || ^9.0",
+    "illuminate/support": ">=8.12",
+    "illuminate/database": ">=8.12",
+    "illuminate/http": ">=8.12",
     "aws/aws-sdk-php": "^3.208",
     "psr/log": "^2"
   },
