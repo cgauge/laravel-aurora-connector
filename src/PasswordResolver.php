@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace CustomerGauge\Aurora;
 
@@ -17,12 +15,14 @@ final class PasswordResolver
         private LoggerInterface $logger
     ) {}
 
-    public function resolve(string $secret)
+    public function resolve(string $secret, bool $refresh)
     {
         try {
-            $response = $this->client->post("http://localhost:2773/secretsmanager/get?secretId=$secret");
-
-            $result = json_decode((string) $response->getBody(), true);
+            $response = $this->client->withHeader('X-Aws-Parameters-Secrets-Token', $_SERVER['AWS_SESSION_TOKEN'])
+                ->get("http://localhost:2773/secretsmanager/get?secretId=$secret");
+            
+            $body = (string) $response->getBody();
+            $result = json_decode($body, true);
 
             if (isset($result['SecretString'])) {
                 $result = json_decode($result['SecretString'], true);
