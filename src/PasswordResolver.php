@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace CustomerGauge\Aurora;
 
@@ -15,12 +17,16 @@ final class PasswordResolver
         private LoggerInterface $logger
     ) {}
 
-    public function resolve(string $secret, bool $refresh)
+    public function resolve(string $secret)
     {
-        $refresh = (int) $refresh;
-
         try {
-            $result = $this->client->post("http://localhost:8015/cache?name=$secret&refresh=$refresh");
+            $response = $this->client->post("http://localhost:2773/secretsmanager/get?secretId=$secret");
+
+            $result = json_decode((string) $response->getBody(), true);
+
+            if (isset($result['SecretString'])) {
+                $result = json_decode($result['SecretString'], true);
+            }
         } catch (Throwable $e) {
             $this->logger->error('Failed to retrieve password from cache server. ' . $e);
 
