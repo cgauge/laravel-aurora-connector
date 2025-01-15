@@ -17,10 +17,16 @@ final class PasswordResolver
 
     public function resolve(string $secret, bool $refresh)
     {
-        $refresh = (int) $refresh;
-
         try {
-            $result = $this->client->post("http://localhost:8015/cache?name=$secret&refresh=$refresh");
+            $response = $this->client->withHeader('X-Aws-Parameters-Secrets-Token', $_SERVER['AWS_SESSION_TOKEN'])
+                ->get("http://localhost:2773/secretsmanager/get?secretId=$secret");
+            
+            $body = (string) $response->getBody();
+            $result = json_decode($body, true);
+
+            if (isset($result['SecretString'])) {
+                $result = json_decode($result['SecretString'], true);
+            }
         } catch (Throwable $e) {
             $this->logger->error('Failed to retrieve password from cache server. ' . $e);
 
