@@ -18,7 +18,8 @@ final class PasswordResolver
     public function resolve(string $secret, bool $refresh)
     {
         try {
-            $response = $this->client->withHeader('X-Aws-Parameters-Secrets-Token', $_SERVER['AWS_SESSION_TOKEN'])
+            $response = $this->client
+                ->withHeaders(['X-Aws-Parameters-Secrets-Token' => $_SERVER['AWS_SESSION_TOKEN']])
                 ->get("http://localhost:2773/secretsmanager/get?secretId=$secret");
             
             $body = (string) $response->getBody();
