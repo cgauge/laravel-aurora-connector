@@ -28,9 +28,9 @@ final class AuroraConnector extends MySqlConnector
             // The Password Resolver extension will keep a cache of the password.
             // If Laravel throws an exception because of wrong password, then
             // we can retry but ask the extension to refresh the cache.
-            $refreshCache = $attempt > 1;
+            $freshSecret = $attempt > 1;
 
-            $config['password'] = $this->resolver->resolve($config['aurora']['secret'], $refreshCache);
+            $config['password'] = $this->resolver->resolve($config['aurora']['secret'], $freshSecret);
 
             return parent::createConnection($dsn, $config, $options);
         };
