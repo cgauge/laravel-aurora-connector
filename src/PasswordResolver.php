@@ -15,26 +15,38 @@ final class PasswordResolver
         private LoggerInterface $logger
     ) {}
 
-    public function resolve(string $secret, bool $refresh)
+    private function retrieveFromCacheServer(string $secret)
     {
-        try {
-            $response = $this->client
-                ->withHeaders(['X-Aws-Parameters-Secrets-Token' => $_SERVER['AWS_SESSION_TOKEN']])
-                ->get("http://localhost:2773/secretsmanager/get?secretId=$secret");
-            
-            $body = (string) $response->getBody();
-            $result = json_decode($body, true);
+        $response = $this->client
+            ->withHeaders(['X-Aws-Parameters-Secrets-Token' => $_SERVER['AWS_SESSION_TOKEN']])
+            ->get("http://localhost:2773/secretsmanager/get?secretId=$secret");
 
-            if (isset($result['SecretString'])) {
-                $result = json_decode($result['SecretString'], true);
-            }
+        $result = json_decode($response->json('SecretString'), true);
+
+        return $result['password'];
+    }
+
+    private function retrieveFromSecretManager(string $secret)
+    {
+        $response = $this->smClient->getSecretValue(['SecretId' => $secret]);
+
+        $result = json_decode($response['SecretString'], true);
+
+        return $result['password'];
+    }
+
+    public function resolve(string $secret, bool $fresh)
+    {
+        if ($fresh) {
+            return $this->retrieveFromSecretManager($secret);
+        }
+
+        try {
+            return $this->retrieveFromCacheServer($secret);
         } catch (Throwable $e) {
             $this->logger->error('Failed to retrieve password from cache server. ' . $e);
 
-            $response = $this->smClient->getSecretValue(['SecretId' => $secret]);
-            $result = json_decode($response['SecretString'], true);
+            return $this->retrieveFromSecretManager($secret);
         }
-
-        return $result['password'];
     }
 }
